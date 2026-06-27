@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "banditvault.xboxcompat.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "PathUtilBypassMixin",
+    "ZipFsBypassMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

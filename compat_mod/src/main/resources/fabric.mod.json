@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "id": "banditvault-xbox-compat",
+  "version": "1.0.0",
+  "name": "Xbox Compat Mod",
+  "description": "Fabric mod that patches filesystem operations for Xbox UWP compatibility (server).",
+  "authors": ["BanditVault"],
+  "contact": {},
+  "license": "MIT",
+  "icon": "assets/icon.png",
+  "environment": "*",
+  "entrypoints": {},
+  "mixins": [
+    "banditvault-xbox-compat.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.0",
+    "minecraft": "1.21.11",
+    "java": ">=21"
+  }
+}

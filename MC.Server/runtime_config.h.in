@@ -1,0 +1,17 @@
+#pragma once
+
+namespace RuntimeConfig {
+
+constexpr const wchar_t* MC_VERSION = L"@MC_VERSION@";
+constexpr const wchar_t* FABRIC_LOADER_VERSION = L"@FABRIC_LOADER_VERSION@";
+constexpr const char* JVM_XMX = "4G";
+constexpr const char* JVM_XMS = "1G";
+constexpr const wchar_t* APP_DISPLAY_NAME = L"Minecraft Server UWP";
+constexpr const wchar_t* APP_PUBLISHER = L"CN=BanditVault";
+constexpr const wchar_t* STDOUT_LOG_FILE = L"server_stdout.log";
+constexpr const wchar_t* STDERR_LOG_FILE = L"server_stderr.log";
+constexpr int CONSOLE_BUFFER_LINES = 1000;
+constexpr int CONSOLE_CHARS_PER_LINE = 256;
+constexpr float CONSOLE_FONT_SIZE = 14.0f;
+
+}

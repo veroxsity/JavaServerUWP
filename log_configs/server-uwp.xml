@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN" shutdownHook="disable">
+    <Appenders>
+        <!-- Console appender disabled on UWP (no console window) -->
+        <!-- File appender for server log -->
+        <RollingRandomAccessFile name="File"
+            fileName="${sys:user.dir}/logs/latest.log"
+            filePattern="${sys:user.dir}/logs/%d{yyyy-MM-dd}-%i.log.gz"
+            immediateFlush="true">
+            <PatternLayout pattern="[%d{HH:mm:ss}] [%t/%level] [%logger{1}]: %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <OnStartupTriggeringPolicy/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingRandomAccessFile>
+
+        <!-- Stdout fallback (redirected to pipe by host) -->
+        <Console name="Stdout" target="SYSTEM_OUT">
+            <PatternLayout pattern="[%d{HH:mm:ss}] [%t/%level] [%logger{1}]: %msg%n"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <!-- Minecraft -->
+        <Logger name="net.minecraft" level="INFO"/>
+        <!-- Fabric -->
+        <Logger name="net.fabricmc" level="INFO"/>
+        <!-- Xbox Compat -->
+        <Logger name="XboxCompat" level="DEBUG"/>
+        <!-- Quiet down noisy loggers -->
+        <Logger name="io.netty" level="WARN"/>
+        <Logger name="org.lwjgl" level="ERROR"/>
+        <Logger name="com.mojang.authlib" level="INFO"/>
+        <!-- oshi hardware probe needs WMI/COM (Ole32) which the UWP AppContainer
+             blocks, and getFileStore is denied on the sandboxed volume. These are
+             non-fatal crash-report-only warnings that cannot be fixed in the
+             container, so silence the one logger that emits them. -->
+        <Logger name="net.minecraft.SystemReport" level="OFF"/>
+
+        <Root level="INFO">
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="Stdout"/>
+        </Root>
+    </Loggers>
+</Configuration>
