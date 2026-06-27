@@ -383,7 +383,15 @@ if (-not ((Test-Path $appx) -and (($makeappxProc.ExitCode -eq 0) -or ((Get-Conte
 }
 
 $cert = Join-Path $certDir $CertificateFileName
-$certName = if ($env:APPX_CERT_SUBJECT) { $env:APPX_CERT_SUBJECT } else { $DefaultCertificateSubject }
+# signtool rejects an appx whose cert subject != manifest Publisher (SignerSign failed 0x8007000b), so derive the subject from the manifest
+$manifestPublisher = [string]$sourceManifest.Package.Identity.Publisher
+if ($env:APPX_CERT_SUBJECT) {
+    $certName = $env:APPX_CERT_SUBJECT
+} elseif ($manifestPublisher) {
+    $certName = $manifestPublisher
+} else {
+    $certName = $DefaultCertificateSubject
+}
 
 if (-not (Test-Path $cert)) {
     Write-Host "  Generating self-signed certificate..."
