@@ -49,7 +49,11 @@ foreach ($cp in @($fabricLoaderJar, $intermediaryJar, $serverJar)) {
 
 # mixin annotation processing needs a fuller compile classpath than runtime mixins do
 $javacArgs = @('--release', '21', '-proc:none', '-cp', $classpath, '-d', $compatModBuild) + $javaFiles.FullName
+# javac warnings hit stderr; with 2>&1 under EAP=Stop (the CI shell forces it) they throw before the exit-code check, so capture under Continue and gate on $LASTEXITCODE
+$prev = $ErrorActionPreference
+$ErrorActionPreference = 'Continue'
 $compileResult = & $javaInfo.JavacExe $javacArgs 2>&1
+$ErrorActionPreference = $prev
 
 if ($LASTEXITCODE -ne 0) {
     Write-Host "Compilation failed:" -ForegroundColor Red
